@@ -25,6 +25,7 @@ Pasos:
 
 CURL
 > 
+curl --location 'http://localhost:8088/desafio-azurian/usuarios'
 
 Front-end
 > 
@@ -45,6 +46,10 @@ Fullstack:
 > 
 
 Ejecute tanto el back-end como el front-end en un solo lugar:
+> 
+
+
+Se deja collection de postman:
 > 
 
 ## Run Spring Boot application in Maven
