@@ -30,14 +30,7 @@
 			"name": "usuarios",
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJydXQiOiJHVFp6YWZqUGpELXNjcmZJejNsRFVOR3pMU1NYSEZWVzhNc083eVQyRGwtUm0tRUtQN1kiLCJkdXJhdGlvbiI6OTAwLCJzdWIiOiJzZXNzaW9uIiwiaXNzIjoiTWlNb3ZpbCIsImlkIjoidkdDZXN4T2k2UVZZQ2tMZkdnckxScXpQRWI5Zi0xV2FjVFloSGEwdVFTWlFNTnRFeDUtYzRDMVF5NDdxUWRWUnhrWkh5eWJVakdfV1BuSFRTWGxFT1EiLCJleHAiOjE2NTYwODUwNjZ9.PuS1v4bKA3CGIQU4fjLtHwJkcQgvry9s6RenLUQU55c",
-						"type": "text",
-						"disabled": true
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "http://localhost:8088/desafio-azurian/usuarios/user?user=rrrr&password=123456565",
 					"protocol": "http",
