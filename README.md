@@ -25,7 +25,20 @@ Pasos:
 
 CURL
 > 
-curl --location 'http://localhost:8088/desafio-azurian/usuarios'
+Para Agregar Registros:
+	
+	curl --location 'http://localhost:8088/desafio-azurian/usuarios' \
+--header 'Content-Type: application/json' \
+--data-raw ' {
+        "name": "Juan Rodriguez2",
+        "email": "juan@rodriguez2.org",
+        "password": "hunter2882",
+        "isActive": true
+    }'
+
+Para Listar Registros:
+
+	curl --location 'http://localhost:8088/desafio-azurian/usuarios'
 
 Front-end
 > 
