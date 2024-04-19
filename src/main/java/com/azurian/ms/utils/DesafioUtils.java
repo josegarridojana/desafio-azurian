@@ -12,6 +12,8 @@
  */
 package com.azurian.ms.utils;
 
+import java.util.regex.Pattern;
+
 /**
  * DesafioUtils.
  *
@@ -28,6 +30,39 @@ public final class DesafioUtils {
      */
     private DesafioUtils() {
         throw new UnsupportedOperationException("Prohibido Instanciar esta clase");
+    }
+
+    /**
+     * Valida email segun una expresiones regulares.
+     *
+     * @param email {@link String} email del cliente
+     * @param regex {@link String} expresion regular
+     * @return {@link Boolean}
+     */
+    public static boolean validateEmail(final String email, final String regex) {
+        final var pattern = Pattern.compile(regex);
+        final var matcher = pattern.matcher(email);
+        if (!matcher.matches()) {
+            return false;
+        }
+        return pattern.matcher(email).matches();
+    }
+
+    /**
+     * Valida password segun una expresiones regulares.
+     * Mínimo ocho caracteres, al menos una letra y un número
+     *
+     * @param password {@link String} password del cliente
+     * @param regex {@link String} expresion regular
+     * @return {@link Boolean}
+     */
+    public static boolean validatePassword(final String password, final String regex) {
+        final var pattern = Pattern.compile(regex);
+        final var matcher = pattern.matcher(password);
+        if (password.isEmpty() || password == "" || !matcher.matches()) {
+            return false;
+        }
+        return pattern.matcher(password).matches();
     }
 
 }

@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Component
 @NoArgsConstructor
-@ConfigurationProperties(prefix = "desafio.nisum.expres.regex")
+@ConfigurationProperties(prefix = "desafio.azurian.expres.regex")
 public class ExpresRegexProperties {
 
     /** email. */

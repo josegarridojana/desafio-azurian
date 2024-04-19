@@ -36,7 +36,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Jose.
  * @version 1.0.0
  */
-//@CrossOrigin(origins = "http://localhost:8081")
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)

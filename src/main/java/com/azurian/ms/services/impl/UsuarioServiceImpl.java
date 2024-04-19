@@ -14,8 +14,10 @@ package com.azurian.ms.services.impl;
 
 import com.azurian.ms.entities.Usuario;
 import com.azurian.ms.exceptions.SimpleException;
+import com.azurian.ms.properties.ExpresRegexProperties;
 import com.azurian.ms.repositories.UsuarioRepository;
 import com.azurian.ms.services.UsuarioService;
+import com.azurian.ms.utils.DesafioUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +38,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     /** usuarioRepository. */
     private final UsuarioRepository usuarioRepository;
-
+  /** expresRegexProperties. */
+    private final ExpresRegexProperties expresRegexProperties;
+	
     @Override
     public List<Usuario> getAllUsuarios() {
         try {
@@ -76,6 +80,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario createUsuario(final Usuario usuario) {
         try {
+            this.validateEmailAndPassword(usuario);
             final var findUserEmail = this.usuarioRepository.findByEmail(usuario.getEmail());
             if (findUserEmail.isPresent()) {
                 throw new SimpleException("El correo ya registrado", HttpStatus.BAD_REQUEST.value());
@@ -140,6 +145,14 @@ public class UsuarioServiceImpl implements UsuarioService {
             return this.usuarioRepository.findByIsActive(true);
         } catch (final Exception ex) {
             throw new SimpleException("Error al crear usuarios", HttpStatus.BAD_REQUEST.value(), ex);
+        }
+    }
+
+    private void validateEmailAndPassword(final Usuario usuario) {
+        if (!DesafioUtils.validateEmail(usuario.getEmail(), this.expresRegexProperties.getEmail()) && !DesafioUtils
+            .validatePassword(usuario
+                .getPassword(), this.expresRegexProperties.getPassword())) {
+            throw new SimpleException("El correo o la password no son validas", HttpStatus.BAD_REQUEST.value());
         }
     }
 
