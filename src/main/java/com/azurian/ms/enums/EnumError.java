@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
  */
 
 @RequiredArgsConstructor
-public enum EnumError {
+public enum EnumError implements EnumsError {
 
     /** DEFAULT. */
     DEFAULT("99", "Error Generico"),
@@ -58,6 +58,7 @@ public enum EnumError {
      *
      * @return code
      */
+    @Override
     public String getCode() {
         return this.code;
     }
@@ -67,7 +68,32 @@ public enum EnumError {
      *
      * @return message
      */
+    @Override
     public String getMessage() {
+        return this.message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getPrefix() {
+        return "BFF";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getStandardLogCode() {
+        return this.code;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getStandardLogMessage() {
         return this.message;
     }
 

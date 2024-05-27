@@ -13,6 +13,7 @@
 package com.azurian.ms.services.impl;
 
 import com.azurian.ms.entities.Usuario;
+import com.azurian.ms.enums.EnumError;
 import com.azurian.ms.exceptions.SimpleException;
 import com.azurian.ms.properties.ExpresRegexProperties;
 import com.azurian.ms.repositories.UsuarioRepository;
@@ -38,15 +39,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     /** usuarioRepository. */
     private final UsuarioRepository usuarioRepository;
-  /** expresRegexProperties. */
+    /** expresRegexProperties. */
     private final ExpresRegexProperties expresRegexProperties;
-	
+
     @Override
     public List<Usuario> getAllUsuarios() {
         try {
             return this.usuarioRepository.findAll();
         } catch (final Exception ex) {
-            throw new SimpleException("Error al consultar listado de usuarios", HttpStatus.BAD_REQUEST.value(), ex);
+            throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value(), ex);
         }
     }
 
@@ -57,7 +58,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             this.usuarioRepository.findByNameContaining(name).forEach(usuarios::add);
             return usuarios;
         } catch (final Exception ex) {
-            throw new SimpleException("Error al consultar listado de usuarios por nombre", HttpStatus.BAD_REQUEST
+            throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST
                 .value(), ex);
         }
     }
@@ -67,11 +68,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         try {
             final var pruebaData = this.usuarioRepository.findById(id);
             if (!pruebaData.isPresent()) {
-                throw new SimpleException("Usuario no encontrado", HttpStatus.BAD_REQUEST.value());
+                throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value());
             }
             return pruebaData.get();
         } catch (final Exception ex) {
-            throw new SimpleException("Error al consultar listado de usuarios por id", HttpStatus.BAD_REQUEST.value(),
+            throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value(),
                 ex);
         }
 
@@ -83,7 +84,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             this.validateEmailAndPassword(usuario);
             final var findUserEmail = this.usuarioRepository.findByEmail(usuario.getEmail());
             if (findUserEmail.isPresent()) {
-                throw new SimpleException("El correo ya registrado", HttpStatus.BAD_REQUEST.value());
+                throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value());
             }
             final var saveUsuario = new Usuario();
             saveUsuario.setName(usuario.getName());
@@ -96,16 +97,17 @@ public class UsuarioServiceImpl implements UsuarioService {
             return this.usuarioRepository
                 .save(saveUsuario);
         } catch (final Exception ex) {
-            throw new SimpleException("Error al crear usuarios", HttpStatus.BAD_REQUEST.value(), ex);
+            throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value(), ex);
         }
     }
 
     @Override
     public Usuario updateUsuario(final long id, final Usuario usuario) {
         try {
+
             final var usuarioData = this.usuarioRepository.findById(id);
             if (!usuarioData.isPresent()) {
-                throw new SimpleException("Usuario no actualizado", HttpStatus.BAD_REQUEST.value());
+                throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value());
             }
             final var saveUsuario = usuarioData.get();
             saveUsuario.setName(usuario.getName());
@@ -115,7 +117,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             saveUsuario.setModified(new Date());
             return this.usuarioRepository.save(saveUsuario);
         } catch (final Exception ex) {
-            throw new SimpleException("Error al crear usuarios", HttpStatus.BAD_REQUEST.value(), ex);
+            throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value(), ex);
         }
     }
 
@@ -125,7 +127,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             this.usuarioRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (final Exception ex) {
-            throw new SimpleException("Error al crear usuarios", HttpStatus.BAD_REQUEST.value(), ex);
+            throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value(), ex);
         }
     }
 
@@ -135,7 +137,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             this.usuarioRepository.deleteAll();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (final Exception ex) {
-            throw new SimpleException("Error al crear usuarios", HttpStatus.BAD_REQUEST.value(), ex);
+            throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value(), ex);
         }
     }
 
@@ -144,7 +146,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         try {
             return this.usuarioRepository.findByIsActive(true);
         } catch (final Exception ex) {
-            throw new SimpleException("Error al crear usuarios", HttpStatus.BAD_REQUEST.value(), ex);
+            throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value(), ex);
         }
     }
 
@@ -152,7 +154,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (!DesafioUtils.validateEmail(usuario.getEmail(), this.expresRegexProperties.getEmail()) && !DesafioUtils
             .validatePassword(usuario
                 .getPassword(), this.expresRegexProperties.getPassword())) {
-            throw new SimpleException("El correo o la password no son validas", HttpStatus.BAD_REQUEST.value());
+            throw new SimpleException(EnumError.DEFAULT, HttpStatus.BAD_REQUEST.value());
         }
     }
 

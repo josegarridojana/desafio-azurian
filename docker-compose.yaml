@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  mysql8:
+    container_name: mysql8
+    image: mysql:8
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: sasa
+      MYSQL_DATABASE: msvc_usuarios
